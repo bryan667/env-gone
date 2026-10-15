@@ -1,6 +1,7 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "env-gone",
+  "account_id": "b1fd27b6f98beac5b5d5190a37344764",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
   "upload_source_maps": false,
@@ -16,9 +17,8 @@
     {
       "binding": "DB",
       "database_name": "env-gone",
-      // Replace with the id printed by `npx wrangler d1 create env-gone`.
-      // Local development never uses this value; it uses `.wrangler/state`.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      // Production D1 database. Local development uses `.wrangler/state`.
+      "database_id": "ad6063a7-6f36-4b0a-b6c1-15d86c97bb40",
       "migrations_dir": "migrations"
     }
   ],

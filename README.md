@@ -2,6 +2,8 @@
 
 **Share your .env. Then it's gone.**
 
+Live app: <https://env-gone.env-gone.workers.dev>
+
 env-gone is a private handoff for environment variables: paste `.env` values,
 API keys, or database URLs and send your teammate a link that works **once**.
 Formatting, comments, and line breaks stay intact. The shared copy is deleted
@@ -113,6 +115,23 @@ from the Worker.
 
 ## Deploying to Cloudflare (free)
 
+The checked-in `wrangler.jsonc` is configured for this app's Cloudflare account
+and existing `env-gone` D1 database. Its initial remote migration has been
+applied, and the Worker and daily cleanup trigger are deployed. Production
+verification passed all 29 browser checks and an eight-request consume race
+(exactly one successful read). To deploy updates to that account:
+
+```bash
+npx wrangler login
+npm run db:migrate:remote
+npm run deploy
+```
+
+Cloudflare requires a verified account email before publishing Workers. If a
+deployment reports error `10034`, verify the email and rerun `npm run deploy`.
+
+For a separate Cloudflare account, provision a new database instead:
+
 1. Log in and create the D1 database:
 
    ```bash
@@ -120,8 +139,9 @@ from the Worker.
    npx wrangler d1 create env-gone
    ```
 
-2. Copy the printed `database_id` into `wrangler.jsonc`
-   (`d1_databases[0].database_id`), replacing the placeholder.
+2. Set `account_id` to that account's ID (shown by `npx wrangler whoami`) and
+   copy the printed `database_id` into `wrangler.jsonc`
+   (`d1_databases[0].database_id`).
 
 3. Apply the schema to the remote database:
 
