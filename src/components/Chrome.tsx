@@ -26,7 +26,17 @@ export function SiteHeader({ action }: { action?: ReactNode }) {
       <a className="brand-link" href="/" aria-label="env-gone home">
         <Logo />
       </a>
-      {action ?? null}
+      <nav className="head-nav" aria-label="Site navigation">
+        {action ?? null}
+        <a
+          className="head-link"
+          href="https://github.com/bryan667/env-gone"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+      </nav>
     </header>
   );
 }

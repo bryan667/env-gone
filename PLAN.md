@@ -29,8 +29,8 @@ accounts) can be added without changing the one-time-read contract.
 ## User experience
 
 1. `/` — multiline plain-text editor with `.env` formatting, a clear 64 KiB
-   UTF-8 limit, an expiry selector (1 hour, 1 day, 7 days, 30 days; default
-   30 days), and **Create private link**. Creating a share requires no account or creator token.
+   UTF-8 limit, an expiry selector (1 hour, 8 hours, 1 day, 7 days; default
+   1 hour), and **Create private link**. Creating a share requires no account or creator token.
 2. Creation happens in the browser: encrypt, upload ciphertext, then show the
    complete one-time link with **Copy link** and its expiry. The editor is
    cleared after success. No server-rendered preview is shown.
@@ -147,7 +147,7 @@ Body: { consumeToken }
 503:  { error: "temporarily_unavailable" }
 ```
 
-Allowed TTL values are `3600`, `86400`, `604800`, and `2592000` seconds. A wrong
+Allowed TTL values are `3600`, `28800`, `86400`, and `604800` seconds. A wrong
 token leaves the row intact. Cross-origin API calls are rejected.
 
 ## Trust model and crypto protocol

@@ -41,14 +41,14 @@ export interface TtlOption {
 
 export const TTL_OPTIONS: readonly TtlOption[] = [
   { seconds: 3600, label: '1 hour' },
+  { seconds: 28800, label: '8 hours' },
   { seconds: 86400, label: '1 day' },
   { seconds: 604800, label: '7 days' },
-  { seconds: 2592000, label: '30 days' },
 ];
 
 export const ALLOWED_TTL_SECONDS: readonly number[] = TTL_OPTIONS.map((option) => option.seconds);
 
-export const DEFAULT_TTL_SECONDS = 2592000;
+export const DEFAULT_TTL_SECONDS = 3600;
 
 /** Authenticated additional data binds ciphertext to exactly one note id. */
 export const AAD_PREFIX = 'env-gone:v1:';

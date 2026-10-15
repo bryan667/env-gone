@@ -10,7 +10,7 @@ Implement the functional MVP now. Use `design-preview.html` and the visual/behav
 
 ## Required behavior
 
-1. `/`: plain-text editor with `.env` formatting, UTF-8 byte limit of 64 KiB, expiry options 1 hour/1 day/7 days/30 days (default 30 days), and create button. Creating a share is public: do not require a creator token or show a creator-token field.
+1. `/`: plain-text editor with `.env` formatting, UTF-8 byte limit of 64 KiB, expiry options 1 hour/8 hours/1 day/7 days (default 1 hour), and create button. Creating a share is public: do not require a creator token or show a creator-token field.
 2. Encrypt plaintext in the browser with Web Crypto AES-256-GCM, a fresh random 32-byte key, 12-byte IV, 16-byte ID, and 32-byte consume token. Use AAD `env-gone:v1:<id>`. Store only ciphertext, IV, protocol version, SHA-256 consume-token hash, ID and timestamps.
 3. Share link `/n/<id>#v=1&k=<base64url-key>&t=<base64url-consume-token>`. Key never reaches the server. On recipient load parse fragment into memory and remove fragment with history.replaceState. Do not store secrets in localStorage/sessionStorage/cookies.
 4. Opening a link shows a confirmation shell only. GET/HEAD/prefetch must never consume a note or return its ciphertext. The explicit button POSTs the consume token.

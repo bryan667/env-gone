@@ -79,11 +79,20 @@ a {
   flex: none;
 }
 
+.head-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
 .head-link {
   color: #515158;
   text-decoration: none;
   font-size: 13px;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .head-link:hover {

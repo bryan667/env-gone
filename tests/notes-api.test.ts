@@ -110,7 +110,7 @@ beforeEach(async () => {
 
 describe('POST /api/notes', () => {
   it('creates without authentication and stores only ciphertext and metadata', async () => {
-    const note = await buildNote('APP_MODE=production\nAPI_KEY=sk-live-secret\n');
+    const note = await buildNote('APP_MODE=production\nAPI_KEY=sk-live-secret\n', 28800);
 
     const response = await createNote(note);
     expect(response.status).toBe(201);
@@ -125,6 +125,7 @@ describe('POST /api/notes', () => {
     expect(row!.ciphertext).toBe(note.payload.ciphertext);
     expect(row!.iv).toBe(note.payload.iv);
     expect(row!.consume_token_hash).toBe(note.payload.consumeTokenHash);
+    expect(row!.expires_at - row!.created_at).toBe(28800);
 
     const serialized = JSON.stringify(row);
     expect(serialized).not.toContain('APP_MODE=production');
