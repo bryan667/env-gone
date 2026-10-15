@@ -2,7 +2,10 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { CreatePage } from './components/CreatePage';
 import { ReadNote } from './components/ReadNote';
+import { applyTheme, readThemePreference, systemTheme } from './lib/theme';
 import './styles.css';
+
+applyTheme(readThemePreference() ?? systemTheme());
 
 const container = document.getElementById('root');
 if (container === null) {

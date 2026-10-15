@@ -9,6 +9,10 @@ API keys, or database URLs and send your teammate a link that works **once**.
 Formatting, comments, and line breaks stay intact. The shared copy is deleted
 when revealed; the credentials themselves are not revoked or rotated.
 
+The header includes a light/dark theme toggle. It follows the device theme until
+you choose one, then remembers only `light` or `dark` in local storage. Notes,
+decryption keys, and consume tokens are never saved in browser storage.
+
 The recipient sees a confirmation screen first. Pressing the button consumes
 the note exactly once and reveals it with the warning:
 

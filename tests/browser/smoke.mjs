@@ -204,7 +204,7 @@ async function runTests(wsUrl) {
 
   const storageIsEmpty = async () =>
     (await evaluate(
-      `Object.keys(localStorage).length + Object.keys(sessionStorage).length + document.cookie.length`,
+      `Object.keys(localStorage).filter(key => key !== 'env-gone-theme').length + Object.keys(sessionStorage).length + document.cookie.length + (localStorage.getItem('env-gone-theme') === null || ['light', 'dark'].includes(localStorage.getItem('env-gone-theme')) ? 0 : 1)`,
     )) === 0;
 
   const createNote = async (text) => {
@@ -219,9 +219,25 @@ async function runTests(wsUrl) {
 
   await send('Page.enable');
   await send('Runtime.enable');
+  await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'dark' }] });
   await navigate(`${BASE}/`);
   await waitFor(`!!document.querySelector('#note-input')`);
   check('sharing form needs no creator token', await evaluate(`!document.querySelector('#creator-token') && !document.querySelector('input[type=password]')`));
+
+  check('theme initially follows the device dark preference', await evaluate(`document.documentElement.dataset.theme === 'dark' && localStorage.getItem('env-gone-theme') === null`));
+  await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'light' }] });
+  check('theme follows device changes before an explicit choice', await waitFor(`document.documentElement.dataset.theme === 'light'`));
+  await evaluate(`document.querySelector('.theme-toggle').click()`);
+  check('theme toggle switches to dark and remembers only the preference', await waitFor(`document.documentElement.dataset.theme === 'dark' && localStorage.getItem('env-gone-theme') === 'dark'`));
+  await send('Page.reload');
+  check('explicit dark preference survives a reload on a light device', await waitFor(`!!document.querySelector('.theme-toggle') && document.documentElement.dataset.theme === 'dark'`));
+  await evaluate(`document.querySelector('.theme-toggle').click()`);
+  check('theme can switch back to light', await waitFor(`document.documentElement.dataset.theme === 'light' && localStorage.getItem('env-gone-theme') === 'light'`));
+  await evaluate(`document.querySelector('.theme-toggle').click()`);
+
+  await send('Emulation.setDeviceMetricsOverride', { width: 320, height: 740, deviceScaleFactor: 1, mobile: true });
+  check('theme toggle and header fit a narrow phone', await evaluate(`document.documentElement.scrollWidth <= innerWidth && document.querySelector('.theme-toggle').getBoundingClientRect().right <= innerWidth`));
+  await send('Emulation.clearDeviceMetricsOverride');
 
   // Optional review artifacts; only the empty composer is captured.
   if (process.env.ENV_GONE_SCREENSHOTS) {

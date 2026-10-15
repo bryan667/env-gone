@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { ThemeToggle } from './ThemeToggle';
 
 export function Logo() {
   return (
@@ -13,7 +14,7 @@ export function Logo() {
       >
         <rect x="2" y="2" width="20" height="20" rx="6" fill="none" stroke="currentColor" strokeWidth="2" />
         <path d="M7 9h10M7 13h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        <path d="M14.5 17.5 19.5 12.5" stroke="#0066cc" strokeWidth="2" strokeLinecap="round" />
+        <path d="M14.5 17.5 19.5 12.5" stroke="var(--blue)" strokeWidth="2" strokeLinecap="round" />
       </svg>
       <span>env-gone</span>
     </span>
@@ -36,6 +37,7 @@ export function SiteHeader({ action }: { action?: ReactNode }) {
         >
           GitHub
         </a>
+        <ThemeToggle />
       </nav>
     </header>
   );

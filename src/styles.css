@@ -10,6 +10,36 @@
   --green: #157347;
   --white: #fff;
   --danger: #9a1f1f;
+  --field-border: #d7d7dc;
+  --button-ink: #fff;
+  --ghost-hover: #e2eefb;
+  --error-border: #f0d0d0;
+  --error-bg: #fdf3f3;
+  --success-border: #cfe8dc;
+  --success-bg: #f2faf5;
+  --success-ink: #1e553a;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --ink: #f5f5f7;
+  --muted: #a1a1aa;
+  --line: #343438;
+  --soft: #242426;
+  --blue: #70b5ff;
+  --blue-hover: #96caff;
+  --blue-soft: #172d44;
+  --green: #7cddb1;
+  --white: #161618;
+  --danger: #ffaaaa;
+  --field-border: #494950;
+  --button-ink: #101b2b;
+  --ghost-hover: #203f5c;
+  --error-border: #713d42;
+  --error-bg: #361f23;
+  --success-border: #335a46;
+  --success-bg: #192c22;
+  --success-ink: #9fe0b9;
 }
 
 *,
@@ -48,13 +78,13 @@ a {
 }
 
 .site-head {
-  height: 66px;
+  min-height: 66px;
   border-bottom: 1px solid var(--line);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 0 max(24px, calc((100% - 1080px) / 2));
+  padding: 12px max(24px, calc((100% - 1080px) / 2));
   background: var(--white);
 }
 
@@ -84,11 +114,11 @@ a {
   align-items: center;
   justify-content: flex-end;
   flex-wrap: wrap;
-  gap: 8px 20px;
+  gap: 8px 16px;
 }
 
 .head-link {
-  color: #515158;
+  color: var(--muted);
   text-decoration: none;
   font-size: 13px;
   font-weight: 500;
@@ -97,6 +127,26 @@ a {
 
 .head-link:hover {
   color: var(--blue);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: var(--soft);
+  border-color: var(--muted);
 }
 
 .main {
@@ -181,11 +231,11 @@ h1 {
   width: 100%;
   min-height: 230px;
   resize: vertical;
-  border: 1px solid #d7d7dc;
+  border: 1px solid var(--field-border);
   border-radius: 12px;
   padding: 19px 20px;
-  background: #fff;
-  color: #303036;
+  background: var(--white);
+  color: var(--ink);
   font: 13px/1.8 ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
@@ -203,7 +253,7 @@ h1 {
 
 .counter {
   text-align: right;
-  color: #8a8a91;
+  color: var(--muted);
   font-size: 11px;
   margin-top: 8px;
 }
@@ -228,12 +278,12 @@ h1 {
   display: block;
   width: 100%;
   min-height: 44px;
-  border: 1px solid #d7d7dc;
+  border: 1px solid var(--field-border);
   border-radius: 11px;
   padding: 11px 14px;
   font-size: 13px;
   color: var(--ink);
-  background: #fff;
+  background: var(--white);
   font-family: inherit;
 }
 
@@ -245,8 +295,8 @@ h1 {
 
 select.input {
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, #777 50%),
-    linear-gradient(135deg, #777 50%, transparent 50%);
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
   background-position: calc(100% - 18px) 20px, calc(100% - 13px) 20px;
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
@@ -277,7 +327,7 @@ select.input {
   border: 1px solid transparent;
   border-radius: 999px;
   background: var(--blue);
-  color: #fff;
+  color: var(--button-ink);
   font-family: inherit;
   font-size: 13px;
   font-weight: 650;
@@ -300,7 +350,7 @@ select.input {
 }
 
 .button.ghost:hover:not(:disabled) {
-  background: #e2eefb;
+  background: var(--ghost-hover);
 }
 
 .button.tiny {
@@ -310,8 +360,8 @@ select.input {
 
 .error-strip {
   margin: 20px 0 0;
-  border: 1px solid #f0d0d0;
-  background: #fdf3f3;
+  border: 1px solid var(--error-border);
+  background: var(--error-bg);
   color: var(--danger);
   border-radius: 12px;
   padding: 13px 16px;
@@ -336,7 +386,7 @@ select.input {
   align-items: center;
   justify-content: center;
   background: var(--soft);
-  color: #62626a;
+  color: var(--muted);
   font-size: 12px;
   font-weight: 700;
   margin-bottom: 12px;
@@ -357,7 +407,7 @@ select.input {
 .site-foot {
   border-top: 1px solid var(--line);
   padding: 22px max(24px, calc((100% - 1080px) / 2));
-  color: #85858b;
+  color: var(--muted);
   font-size: 11px;
   display: flex;
   justify-content: space-between;
@@ -371,14 +421,14 @@ select.input {
   display: grid;
   place-items: center;
   color: var(--green);
-  background: #eaf7f0;
+  background: var(--success-bg);
   margin-bottom: 19px;
   font-size: 25px;
   font-weight: 500;
 }
 
 .link-box {
-  border: 1px solid #d7d7dc;
+  border: 1px solid var(--field-border);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -392,7 +442,7 @@ select.input {
   flex: 1;
   border: 0;
   background: transparent;
-  color: #44444b;
+  color: var(--ink);
   font: 12px ui-monospace, SFMono-Regular, Consolas, monospace;
   padding: 0 5px;
 }
@@ -413,7 +463,7 @@ select.input {
 .hint {
   border-radius: 12px;
   background: var(--soft);
-  color: #606067;
+  color: var(--muted);
   font-size: 12px;
   line-height: 1.5;
   padding: 15px 17px;
@@ -460,9 +510,9 @@ select.input {
 }
 
 .notice {
-  border: 1px solid #cfe8dc;
-  background: #f2faf5;
-  color: #1e553a;
+  border: 1px solid var(--success-border);
+  background: var(--success-bg);
+  color: var(--success-ink);
   border-radius: 13px;
   padding: 16px 18px;
   font-size: 13px;
@@ -485,14 +535,14 @@ select.input {
 
 .note-paper {
   background: var(--soft);
-  border: 1px solid #e9e9ec;
+  border: 1px solid var(--line);
   border-radius: 13px;
   padding: 23px;
   min-height: 220px;
   max-height: 60vh;
   overflow: auto;
   margin: 0;
-  color: #303036;
+  color: var(--ink);
   font: 13px/1.8 ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
@@ -538,8 +588,8 @@ select.input {
 
 @media (max-width: 700px) {
   .site-head {
-    padding: 0 24px;
-    height: 60px;
+    padding: 12px 24px;
+    min-height: 60px;
   }
   .main {
     padding: 55px 0 58px;
