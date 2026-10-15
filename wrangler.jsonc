@@ -1,0 +1,37 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "env-gone",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  "upload_source_maps": false,
+  // Serve the built SPA from `dist/` and give the Worker a chance to run first
+  // so it can apply security headers and handle `/api/*`.
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "not_found_handling": "single-page-application"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "env-gone",
+      // Replace with the id printed by `npx wrangler d1 create env-gone`.
+      // Local development never uses this value; it uses `.wrangler/state`.
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // No application secrets are required. Keep this explicit so unrelated
+  // values in a developer's .env are not bound to the Worker.
+  "secrets": {
+    "required": []
+  },
+  "triggers": {
+    // Daily sweep of expired rows. Exact expiry is still enforced on consume.
+    "crons": ["17 3 * * *"]
+  },
+  "observability": {
+    "enabled": true
+  }
+}
